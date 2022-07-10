@@ -1,18 +1,21 @@
-import Link from "next/link";
-import { Navbar, Button } from "react-bootstrap";
+import react from 'react';
+import About from '../component/About';
+import FoodSlider from '../component/FoodSlider';
+import Footer from '../component/Footer';
+import HomeSlider from '../component/HomeSlider';
+import Navbar from '../component/Navbar';
+import Slider from '../component/Slider';
+import Testimonial from '../component/Testimonial';
 
 function HomePage() {
   return (
     <>
-      <Navbar bg="danger" className="px-3">
-        <Navbar.Brand href="/home">Food Waste Reduction</Navbar.Brand>
-        <Navbar.Toggle />
-        <Navbar.Collapse className="justify-content-end">
-          <Button variant="dark" onClick={null}>
-            SignIn/SignUp
-          </Button>
-        </Navbar.Collapse>
-      </Navbar>
+     <Navbar />
+     <Slider />
+     <HomeSlider />
+     <About />
+     <Testimonial />
+     <Footer />
     </>
   );
 }
