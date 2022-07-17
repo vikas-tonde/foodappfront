@@ -45,21 +45,14 @@ function dashboard(props) {
             </div>
           </div>
         </div>
-        <div className="col py-3 donor">
-          <form className="form row">
-            <div className="col-8">
+        <div className="col py-3 donor row">
+          <form className="form col-8">
+            <div className="col-12">
 
             <div className="mb-3">
               <div className="row justify-content-center">
                 <div className="col-6">
                   <h2>Food Donation Form</h2>
-                </div>
-                <div className="col-6">
-                  {/* <Image
-                    src="/images/foodbank.webp"
-                    height="200px"
-                    width="200px"
-                  /> */}
                 </div>
               </div>
             </div>
@@ -179,14 +172,14 @@ function dashboard(props) {
               Submit
             </button>
                 </div>
-                <div className="col-4">
-                    {/* <Image
+          </form>
+          {/* <div className="col-4">
+                    <Image
                     src="/images/slider-img1.png"
                     height="1000px"
                     width="1000px"
-                  /> */}
-                </div>
-          </form>
+                  />
+                </div> */}
         </div>
       </div>
     </div>

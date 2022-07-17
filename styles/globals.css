@@ -986,9 +986,10 @@ height: 100%;
 
 .donor{
   margin-left: 220px;
-  background: url("https://as1.ftcdn.net/v2/jpg/03/60/09/70/1000_F_360097021_COzya5HWZOC9ZPMfqRI9imuPducXh9qj.jpg");
-  background-position: 670px;
-  background-size: 500px;
+  background: url("../public/images/background.png"), #f2f1ee;
+  /* background: linear-gradient(68deg, rgba(123,250,195,1) 35%, rgba(255,191,102,1) 100%); */
+  background-position: 300px;
+  background-size: 1000px;
   background-repeat: no-repeat;
 }
 
@@ -997,4 +998,10 @@ height: 100%;
   margin: 10px;
   box-shadow: 2px 5px 20px #000000b3;
   border-radius: 20px;
+}
+
+.donor input, textarea{
+  /* outline: none;
+  border: none; */
+  background: transparent !important;
 }
