@@ -973,3 +973,28 @@ height: 100%;
 .login input, .register input{
   font-size: 15px;
 }
+
+
+.sidebar-header{
+  font-size: 25px;
+  color: #101010;
+}
+
+.food{
+  margin-left: 200px;
+}
+
+.donor{
+  margin-left: 220px;
+  background: url("https://as1.ftcdn.net/v2/jpg/03/60/09/70/1000_F_360097021_COzya5HWZOC9ZPMfqRI9imuPducXh9qj.jpg");
+  background-position: 670px;
+  background-size: 500px;
+  background-repeat: no-repeat;
+}
+
+.form{
+  padding: 30px;
+  margin: 10px;
+  box-shadow: 2px 5px 20px #000000b3;
+  border-radius: 20px;
+}
