@@ -70,26 +70,26 @@ function login(props) {
               </div>
               <div className="form-floating mb-3 mt-4">
 
-                <input type="email" id="form1Example13" name="email" className="form-control form-control-lg" {...register('email', registerOptions.email)} />
+                <input type="email" id="email" name="email" className="form-control form-control-lg" {...register('email', registerOptions.email)} />
                 <small className="text-danger">
                   {errors?.email && errors.email.message}
                 </small>
 
-                <label className="form-label" htmlFor="form1Example13">Email address</label>
+                <label className="form-label" htmlFor="email">Email address</label>
               </div>
               <div className="form-floating mb-3">
-                <input type="password" id="form1Example23" name='password' className="form-control form-control-lg"
+                <input type="password" id="password" name='password' className="form-control form-control-lg"
                   {...register('password', registerOptions.password)}
                 />
                 <small className="text-danger">
                   {errors?.password && errors.password.message}
                 </small>
-                <label className="form-label" htmlFor="form1Example23">Password</label>
+                <label className="form-label" htmlFor="password">Password</label>
               </div>
               <div className="d-flex justify-content-around align-items-center mb-4">
                 <div className="form-check">
-                  <input className="form-check-input" type="checkbox" value="" id="form1Example3" />
-                  <label className="form-check-label" htmlFor="form1Example3"> Remember me </label>
+                  <input className="form-check-input" type="checkbox" value="" id="remember" />
+                  <label className="form-check-label" htmlFor="remember"> Remember me </label>
                 </div>
                 <Link href="/forgot"><a className='fw-bold'>Forgot password?</a></Link>
               </div>

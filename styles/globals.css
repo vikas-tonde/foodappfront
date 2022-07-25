@@ -988,14 +988,15 @@ height: 100%;
   margin-left: 220px;
   background: url("../public/images/background.png"), #f2f1ee;
   /* background: linear-gradient(68deg, rgba(123,250,195,1) 35%, rgba(255,191,102,1) 100%); */
-  background-position: 300px;
-  background-size: 1000px;
+  /* background-position: 300px; */
+  background-size: 500px;
   background-repeat: no-repeat;
 }
 
 .form{
   padding: 30px;
-  margin: 10px;
+  margin: 20px;
+  width: 1000px;
   box-shadow: 2px 5px 20px #000000b3;
   border-radius: 20px;
 }
@@ -1004,4 +1005,12 @@ height: 100%;
   /* outline: none;
   border: none; */
   background: transparent !important;
+}
+
+.details{
+  margin-top: 100px;
+}
+
+.heading{
+  margin-left: 80px;
 }
