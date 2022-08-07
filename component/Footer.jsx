@@ -61,8 +61,8 @@ function Footer(props) {
         </div>
       </div>
     </div>
-    <footer class="footer_section">
-    <div class="container">
+    <footer className="footer_section">
+    <div className="container">
       <p>
         &copy; <span id="displayYear"></span> All Rights Reserved By
         <a href=""> Food Bank</a>

@@ -3,9 +3,13 @@ import PropTypes from "prop-types";
 import Image from "next/image";
 import Sidebar from "../../component/Sidebar";
 import { register, handleSubmit, useForm } from "react-hook-form";
+import { addDonation } from "../../routes.js";
+import backend from "../../config.js";
 
 function dashboard(props) {
   const [items, setItems] = useState([]);
+  const [lat, setlat] = useState(0);
+  const [lng, setlng] = useState(0);
   const {
     register,
     handleSubmit,
@@ -43,36 +47,51 @@ function dashboard(props) {
         message: "Invalid Address.",
       },
     },
+    images: {
+      required: "Image is required"
+    }
   };
+
+  useEffect(() => {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(function (position) {
+        setlat(position.coords.latitude);
+        setlng(position.coords.longitude);
+      });
+    }
+  }, []);
 
   const handleItems = (data) => {
     setItems((state) => [
       ...state,
-      { title: data.title, expiry: data.expiry, quantity: data.quantity },
+      { name: data.title, expiry: data.expiry, quantity: data.quantity },
     ]);
   };
 
-  const handleDonation = async(data) =>{
-    const response = await fetch("/api/donation", {
-      method: 'POST',
-      body: JSON.stringify({
-          'name': data.name,
-          'adhaarNumber': data.adharcard,
-          'role': userRole,
-          'location': {
-              "latitude": lat,
-              "longitude": lng
-          },
-          'address': data.address,
-          'email': data.email,
-          'password': data.password
-      }),
+  const handleDonation = async (data) => {
+    const allData = new FormData();
+    
+    // console.log(data.images[0]);
+    // console.log(data.images[0].name);
+    allData.append("image", data.images[0], "b1.png" );
+    items.forEach((item, i) => {
+      allData.append(`items[${i}][name]`, item.name);
+      allData.append(`items[${i}][quantity]`, item.quantity);
+      allData.append(`items[${i}][expiry]`, item.expiry);
+    });
+    allData.append("location[longitude]", lng);
+    allData.append("location[latitude]", lat);
+    allData.append("address", data.address);
+    const response = await fetch(`${backend}${addDonation}`, {
+      method: "POST",
+      body: allData,
       headers: {
-          'Content-Type': 'application/json'
-      }
-  }
-  );
-  }
+        Authorization:
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmRiODdkZTEzMDQ2Yzg2MDQxZDMzNzEiLCJpYXQiOjE2NTk4Njk3MDYsImV4cCI6MTY1OTk1NjEwNn0.ElcSAuLwbuFwu-nOB4l4-gy5OdQNbnGsmQlGnMCI9eY",
+      },
+    });
+    console.log(response);
+  };
   return (
     <div className="container-fluid">
       <div className="row flex-nowrap">
@@ -94,7 +113,7 @@ function dashboard(props) {
                 <input
                   type="text"
                   className="form-control"
-                  id="itemtitle"
+                  id="title"
                   name="title"
                   {...register("title", registerOptions.title)}
                 />
@@ -137,8 +156,8 @@ function dashboard(props) {
                   <i aria-hidden className="fas fa-plus"></i> &nbsp; ADD
                 </button>
               </div>
-              </form>
-              <form onSubmit={handleSubmit(handleDonation, handleAddress)} >
+            </form>
+            <form onSubmit={handleSubmit(handleDonation, handleAddress)}>
               <div className="mb-3">
                 <label htmlFor="address" className="form-label">
                   Address
@@ -148,9 +167,9 @@ function dashboard(props) {
                   placeholder="Enter Address here"
                   id="address"
                   name="address"
-                  {...register("title", registerOptions.title)}
+                  {...register("address", registerOptions.address)}
                 ></textarea>
-                 <small className="text-danger">
+                <small className="text-danger">
                   {errors?.address && errors.address.message}
                 </small>
               </div>
@@ -169,8 +188,8 @@ function dashboard(props) {
                     {items.map((item, i) => {
                       return (
                         <tr key={i}>
-                          <th scope="row">{i+1}</th>
-                          <td>{item.title}</td>
+                          <th scope="row">{i + 1}</th>
+                          <td>{item.name}</td>
                           <td>{item.quantity}</td>
                           <td>{item.expiry}</td>
                           <td>
@@ -180,13 +199,22 @@ function dashboard(props) {
                           </td>
                         </tr>
                       );
-                      })}
+                    })}
                   </tbody>
                 </table>
               </div>
               <div className="input-group mt-3 mx-3">
-                <input type="file" className="form-control" id="images" />
+                <input
+                  type="file"
+                  className="form-control"
+                  name="images"
+                  id="images"
+                  {...register("images", registerOptions.images)}
+                />
               </div>
+              <small className="text-danger">
+                  {errors?.images && errors.images.message}
+                </small>
               <div className="container d-flex align-items-center justify-content-center">
                 <button type="submit" className="btn btn-primary mt-5">
                   Submit

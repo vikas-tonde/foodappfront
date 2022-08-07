@@ -18,7 +18,7 @@ function Sidebar(props) {
           </a>
         </li>
         <li className="nav-item">
-          <a href="#" className="nav-link text-white">
+          <a href="history" className="nav-link text-white">
             <i aria-hidden className="fas fa-hand-holding-medical"></i> &nbsp; Your
             donates
           </a>

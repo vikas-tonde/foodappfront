@@ -1014,3 +1014,18 @@ height: 100%;
 .heading{
   margin-left: 80px;
 }
+.second{
+    margin-left: 220px;
+    /* background: url("../public/images/background.png"), #f2f1ee; */
+  }
+
+  .solution_card{
+    background: #fff;
+  box-shadow: 0 2px 4px 0 rgba(136, 144, 195, 0.2),
+    0 5px 15px 0 rgba(37, 44, 97, 0.15);
+  border-radius: 15px;
+  margin: 8px;
+  padding: 10px 15px;
+  }
+
+  
