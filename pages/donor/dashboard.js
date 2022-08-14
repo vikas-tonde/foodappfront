@@ -5,6 +5,9 @@ import Sidebar from "../../component/Sidebar";
 import { register, handleSubmit, useForm } from "react-hook-form";
 import { addDonation } from "../../routes.js";
 import backend from "../../config.js";
+import cookieCutter from 'cookie-cutter';
+
+
 
 function dashboard(props) {
   const [items, setItems] = useState([]);
@@ -47,6 +50,13 @@ function dashboard(props) {
         message: "Invalid Address.",
       },
     },
+    city: {
+      required: "city is required",
+      pattern: {
+        value: /^[0-9A-Za-z ]{1,}$/i,
+        message: "Invalid city.",
+      },
+    },
     images: {
       required: "Image is required"
     }
@@ -70,9 +80,6 @@ function dashboard(props) {
 
   const handleDonation = async (data) => {
     const allData = new FormData();
-    
-    // console.log(data.images[0]);
-    // console.log(data.images[0].name);
     allData.append("image", data.images[0], "b1.png" );
     items.forEach((item, i) => {
       allData.append(`items[${i}][name]`, item.name);
@@ -82,16 +89,18 @@ function dashboard(props) {
     allData.append("location[longitude]", lng);
     allData.append("location[latitude]", lat);
     allData.append("address", data.address);
+    allData.append("city", data.city);
     const response = await fetch(`${backend}${addDonation}`, {
       method: "POST",
       body: allData,
       headers: {
         Authorization:
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmRiODdkZTEzMDQ2Yzg2MDQxZDMzNzEiLCJpYXQiOjE2NTk4Njk3MDYsImV4cCI6MTY1OTk1NjEwNn0.ElcSAuLwbuFwu-nOB4l4-gy5OdQNbnGsmQlGnMCI9eY",
+        cookieCutter.get("jwt")
       },
     });
     console.log(response);
   };
+
   return (
     <div className="container-fluid">
       <div className="row flex-nowrap">
@@ -156,8 +165,8 @@ function dashboard(props) {
                   <i aria-hidden className="fas fa-plus"></i> &nbsp; ADD
                 </button>
               </div>
-            </form>
-            <form onSubmit={handleSubmit(handleDonation, handleAddress)}>
+              </form>
+              <form onSubmit={handleSubmit(handleDonation, handleAddress)}>
               <div className="mb-3">
                 <label htmlFor="address" className="form-label">
                   Address
@@ -171,6 +180,27 @@ function dashboard(props) {
                 ></textarea>
                 <small className="text-danger">
                   {errors?.address && errors.address.message}
+                </small>
+              </div>
+              <div className="mb-3">
+                <label htmlFor="address" className="form-label">
+                  city
+                </label>
+                <select
+                  className="form-control"
+                  placeholder="Enter city here"
+                  id="city"
+                  name="city"
+                  {...register("city", registerOptions.city)}
+                >
+                  { props.data.map((i,index)=>{
+                    return(
+                      <option key={index} value={i}>{i}</option>
+                    )
+                  }) }
+                </select>
+                <small className="text-danger">
+                  {errors?.city && errors.city.message}
                 </small>
               </div>
               <div className="row mt-5  mx-3">
@@ -229,5 +259,22 @@ function dashboard(props) {
 }
 
 dashboard.propTypes = {};
+
+export async function getServerSideProps(context)
+{
+    const response = await fetch("https://countriesnow.space/api/v0.1/countries/state/cities", {
+      method: 'POST',
+      body: JSON.stringify({
+        "country":"India",
+        "state":"Maharashtra"
+    }),
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    }
+    );
+    var data = await response.json();
+    return {props:data}
+}
 
 export default dashboard;
