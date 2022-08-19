@@ -3,13 +3,14 @@ import PropTypes from 'prop-types'
 import Image from 'next/image'
 import Link from 'next/link'
 import { register, handleSubmit, useForm } from 'react-hook-form';
-import { Router } from 'next/router';
+import { useRouter } from 'next/router';
 
 function Register(props) {
     const { register, handleSubmit, formState: { errors } } = useForm({ mode: "onChange" });
     const [lat, setlat] = useState(0)
     const [lng, setlng] = useState(0)
     const [error, setError] = useState(0)
+    const router = useRouter()
     var userRole;
     const handleRegistration = async (data) => {
         if (data.role === "2") {
