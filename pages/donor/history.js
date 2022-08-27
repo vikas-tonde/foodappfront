@@ -14,7 +14,7 @@ function history(props) {
     formState: { errors },
   } = useForm({ mode: "onChange" });
 
-  const [donation, setDonation] = useState(props.data);
+  const [donation, setDonation] = useState(props.data.data);
   const handleError = (errors) => {};
 
   const registerOptions = {
@@ -47,7 +47,7 @@ function history(props) {
   return (
     <div className="container-fluid">
       <div className="row flex-nowrap">
-        <Sidebar />
+        <Sidebar name={props.name} />
         <div className="col py-3 second row">
           <section className="blog_section layout_padding2-top layout_padding-bottom">
             <div className="container">
@@ -142,7 +142,7 @@ export async function getServerSideProps(context)
     }
     );
     var data = await response.json();
-    return {props:data}
+    return { props: { "data": data, "name": context.req.cookies["name"] } }
 }
 
 

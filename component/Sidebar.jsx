@@ -54,8 +54,8 @@ function Sidebar(props) {
         >
           <i aria-hidden className="fas fa-user"></i> &nbsp;
           <span className="d-none d-sm-inline mx-1">
-            {/* {cookieCutter.get("name") } */}
-            shreya ramtirth
+            {props.name }
+            
           </span>
         </a>
       </div>

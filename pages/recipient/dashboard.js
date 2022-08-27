@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, userEffect } from "react";
 import PropTypes from "prop-types";
 import Image from "next/image";
 import Sidebar from "../../component/Sidebar";
@@ -6,14 +6,17 @@ import backend from "../../config";
 import { useForm } from "react-hook-form";
 import { availableDonation } from "../../routes";
 import cookieCutter from 'cookie-cutter';
-function dashboard(props) {
+import { useRouter } from "next/router";
+function Dashboard(props) {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } =  useForm({ mode: "onChange" });
-  const [donation, setDonation] = useState(props.data);
-  const handleError = (errors) => {};
+  } = useForm({ mode: "onChange" });
+  const [donation, setDonation] = useState(props.data.data);
+  const [name, setName] = useState(props.name);
+  const router = useRouter();
+  const handleError = (errors) => { };
   const registerOptions = {
     // location: {
     //   required: "From is required",
@@ -23,7 +26,6 @@ function dashboard(props) {
     // }
   };
   const handleDonation = async (data) => {
-    console.log(data.dateFilter);
     const response = await fetch(`${backend}${availableDonation}`, {
       method: "POST",
       body: JSON.stringify({
@@ -36,14 +38,29 @@ function dashboard(props) {
       },
     });
     let responseData = await response.json()
-    
     setDonation(responseData['data']);
   };
+  const accept = async (_id) => {
+    console.log(_id);
+    const response = await fetch(`${backend}/recipient/accept`, {
+      method: "POST",
+      body: JSON.stringify({
+        "id": _id
+      }),
+      headers: {
+        'Content-Type': "application/json",
+        Authorization: cookieCutter.get("jwt"),
+      },
+    });
+    let data = await response.json();
+    console.log(data)
+    setDonation(data.data);
+  }
   return (
     <div>
       <div className="container-fluid">
         <div className="row flex-nowrap">
-          <Sidebar />
+          <Sidebar name={name} />
           <div className="col py-3 second row">
             <div className="row mt-5">
               <div className="container">
@@ -52,7 +69,7 @@ function dashboard(props) {
                     <h2>Available Food</h2>
                   </div>
                   <div className="row">
-                  <form onSubmit={handleSubmit(handleDonation, handleError)}>
+                    <form onSubmit={handleSubmit(handleDonation, handleError)}>
                       <div className="row">
                         <div className="col-md-6">
                           <div className="search-1">
@@ -76,7 +93,7 @@ function dashboard(props) {
                                 {...register("dateFilter", registerOptions.dateFilter)}
                                 max={new Date().toISOString().split("T")[0]}
                               />
-                              <button>Search</button>
+                              <button className="btn btn-success">search</button>
                             </div>
                           </div>
                         </div>
@@ -90,7 +107,7 @@ function dashboard(props) {
               <div id="columns" className="columns_4">
                 {donation.map((i, index) => {
                   return (
-                    <figure>
+                    <figure key={index}>
                       <Image
                         src={
                           "/" + i["images"][0].split("\\").slice(3).join("/")
@@ -109,15 +126,15 @@ function dashboard(props) {
                         </h5>
                       </figcaption>
                       <h6 className="location">
-                      <i class="fas fa-map-marker-alt"></i> &nbsp;
-                      {i.city}
+                        <i className="fas fa-map-marker-alt"></i> &nbsp;
+                        {i.city}
                       </h6>
                       <span className="price">
                         {new Date(i.dateAdded).toDateString()}
                       </span>
-                      <a className="button" href={i._id}>
-                        Read More
-                      </a>
+                      <button type="button" name="accept" id={i._id} className="btn btn-success-outline"  onClick={(e) => accept(e.target.id)}>
+                        Accept
+                      </button>
                     </figure>
                   );
                 })}
@@ -130,7 +147,7 @@ function dashboard(props) {
   );
 }
 
-dashboard.propTypes = {};
+Dashboard.propTypes = {};
 
 export async function getServerSideProps(context) {
   const response = await fetch(`${backend}/recipient/`, {
@@ -140,8 +157,9 @@ export async function getServerSideProps(context) {
       Authorization: context.req.cookies["jwt"],
     },
   });
-  var data = await response.json();
-  return { props: data };
+  let data = await response.json();
+  console.log(data)
+  return { props: { "data": data, "name": context.req.cookies["name"] } };
 }
 
-export default dashboard;
+export default Dashboard;

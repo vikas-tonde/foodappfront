@@ -104,7 +104,7 @@ function dashboard(props) {
   return (
     <div className="container-fluid">
       <div className="row flex-nowrap">
-        <Sidebar />
+        <Sidebar name={props.name} />
         <div className="col py-3 donor row">
           <div className="col-12 px-5">
             <div className="mb-3 heading">
@@ -193,7 +193,7 @@ function dashboard(props) {
                   name="city"
                   {...register("city", registerOptions.city)}
                 >
-                  { props.data.map((i,index)=>{
+                  { props.data.data.map((i,index)=>{
                     return(
                       <option key={index} value={i}>{i}</option>
                     )
@@ -274,7 +274,7 @@ export async function getServerSideProps(context)
     }
     );
     var data = await response.json();
-    return {props:data}
+    return { props: { "data": data, "name": context.req.cookies["name"] } }
 }
 
 export default dashboard;

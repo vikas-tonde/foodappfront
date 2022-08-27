@@ -14,9 +14,8 @@ function history(props) {
     formState: { errors },
   } = useForm({ mode: "onChange" });
 
-  const [donation, setDonation] = useState(props.data);
+  const [donation, setDonation] = useState(props.data.data);
   const handleError = (errors) => {};
-
   const registerOptions = {
     to: {
       required: "From is required",
@@ -29,7 +28,7 @@ function history(props) {
 
   const handleHistory = async (data) => {
     console.log(data.to);
-    const response = await fetch(`${backend}${historyDonation}`, {
+    const response = await fetch(`${backend}${receiveDonation}`, {
       method: "POST",
       body: JSON.stringify({
         "to": data.to,
@@ -47,12 +46,12 @@ function history(props) {
   return (
     <div className="container-fluid">
       <div className="row flex-nowrap">
-        <Sidebar />
+        <Sidebar name={props.name}/>
         <div className="col py-3 second row">
           <section className="blog_section layout_padding2-top layout_padding-bottom">
             <div className="container">
               <div className="heading_container">
-                <h2>Donation History</h2>
+                <h2>Recipient&rsquo;s History</h2>
               </div>
               <div className="row mt-5">
                 <div className="container">
@@ -93,7 +92,8 @@ function history(props) {
               <div className="row">
               { donation.map((i,index)=>{
               return(
-                <div className="col-md-4" key={index}>
+                
+                <div key={index} className="col-md-4">
                   <div className="box">
                     <div className="img-box">
                       <Image
@@ -103,12 +103,12 @@ function history(props) {
                         alt=""
                       />
                       <h4 className="blog_date">
-                        {new Date(i.dateAdded).toDateString()}
+                        {new Date(i.dateAdded).toISOString().split("T")[0]}
                       </h4>
                     </div>
                     <div className="detail-box">
                     
-                      <h5> {i.items.map((e,i)=>{
+                      <h5> {i.items.map((e)=>{
                         return(e.name)
                       }).join(", ") }
                       </h5>
@@ -119,7 +119,8 @@ function history(props) {
                     </div>
                   </div>
                 </div>
-                )}) }
+                );
+                }) }
               </div>
             </div>
           </section>
@@ -142,7 +143,7 @@ export async function getServerSideProps(context)
     }
     );
     var data = await response.json();
-    return {props:data}
+    return { props: { "data": data, "name": context.req.cookies["name"] } }
 }
 
 
