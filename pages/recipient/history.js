@@ -7,7 +7,7 @@ import backend from "../../config";
 import {historyDonation, receiveDonation} from "../../routes";
 import cookieCutter from 'cookie-cutter';
 
-function history(props) {
+function History(props) {
   const {
     register,
     handleSubmit,
@@ -130,7 +130,7 @@ function history(props) {
   );
 }
 
-history.propTypes = {};
+History.propTypes = {};
 
 export async function getServerSideProps(context)
 {
@@ -147,4 +147,4 @@ export async function getServerSideProps(context)
 }
 
 
-export default history;
+export default History;

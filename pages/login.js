@@ -6,10 +6,10 @@ import { register, handleSubmit, useForm } from 'react-hook-form';
 import cookieCutter from 'cookie-cutter';
 import { useRouter } from 'next/router'
 
-function login(props) {
+function Login(props) {
   const { register, handleSubmit, formState: { errors } } = useForm({ mode: "onChange" });
   const handleError = (errors) => { };
-  const [role,setRole] = useState('');
+  const [role, setRole] = useState('');
   const router = useRouter();
   const handleLogin = async (data) => {
     const response = await fetch("/api/login", {
@@ -24,15 +24,15 @@ function login(props) {
     }
     );
     const responseData = await response.json();
-    cookieCutter.set('jwt', responseData['jwt'])
-    cookieCutter.set('name', responseData['name'])
-    
-    
+    cookieCutter.set('jwt', responseData['jwt'], { expires: new Date(Date.now() + 86400) })
+    cookieCutter.set('name', responseData['name'], { expires: new Date(Date.now() + 86400) })
+
+
     if (responseData['role'] === 'donor')
       router.push('/donor/dashboard')
-    else if(responseData['role'] === 'recipient')
+    else if (responseData['role'] === 'recipient')
       router.push('/recipient/dashboard')
-    else if(responseData['role'] === 'admin')
+    else if (responseData['role'] === 'admin')
       router.push('/admin/dashboard')
   }
 
@@ -104,6 +104,6 @@ function login(props) {
   )
 }
 
-login.propTypes = {}
+Login.propTypes = {}
 
-export default login
+export default Login
