@@ -1,222 +1,114 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
-import Image from "next/image";
-
-import backend from "../../config";
+import AdminSidebar from "../../component/AdminSidebar";
 import { useForm } from "react-hook-form";
-import { availableDonation } from "../../routes";
-import cookieCutter from "cookie-cutter";
+
 function Dashboard(props) {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({ mode: "onChange" });
-  const [donation, setDonation] = useState(props.donations.data);
-  const [user, setUser] = useState(props.users.data);
-  const handleError = (errors) => { };
-  const registerOptions = {
-
-  };
-  const handleDonation = async (data) => {
-    let body = {}
-    if (data.dateFilter !== '') {
-      body['dateFilter'] = data.dateFilter;
-      console.log('here');
-    }
-    // if (data.donor !== '') {
-    //   body['user'] = data.user;
-    // }
-    const response = await fetch(`${backend}/admin/donations`, {
-      method: "POST",
-      body: JSON.stringify(body),
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: cookieCutter.get("jwt"),
-      },
-    });
-    let responseData = await response.json();
-    setDonation(responseData.data);
-
-  };
+  const [name, setUser] = useState(props.name);
   return (
     <div>
       <div className="container-fluid">
         <div className="row flex-nowrap">
-          {/* <Sidebar /> */}
-          <div className="col py-3  row">
-            <div className="row mt-5">
-              <div className="container">
-                <div className="search">
-                  <div className="heading_container">
-                    <h2>Donation</h2>
-                  </div>
-                  <div className="row">
-                    <form onSubmit={handleSubmit(handleDonation, handleError)}>
-                      <div className="row">
-                        {/* <div className="col-md-6">
-                          <div className="search-1">
-                            <input
-                              type="text"
-                              id="donor"
-                              name="donor"
-                              placeholder="donor"
-                              {...register("donor", registerOptions.donor)}
-                            />
+          <AdminSidebar name={name} />
+
+          <div className="col py-3 second row">
+            <main className="main">
+              <section className="card-area">
+                <section className="card-section">
+                  <div className="card">
+                    <div className="flip-card">
+                      <div className="flip-card__container">
+                        <div className="card-front">
+                          <div className="card-front__tp card-front__tp--city">
+                          <i className="fas fa-hand-holding-usd"></i>
+                            <h2 className="card-front__heading">Donation</h2>
+                            {/* <p className="card-front__text-price">
+                                All donation history
+                            </p> */}
                           </div>
-                        </div> */}
-                        <div className="col-md-6">
-                          <div>
-                            <div className="search-2">
-                              Date
-                              <input
-                                type="date"
-                                id="dateFilter"
-                                name="dateFilter"
-                                {...register(
-                                  "dateFilter",
-                                  registerOptions.dateFilter
-                                )}
-                                max={new Date().toISOString().split("T")[0]}
-                              />
-                              <button type="submit">Search</button>
-                            </div>
+
+                          <div className="card-front__bt">
+                            <p className="card-front__text-view card-front__text-view--city">
+                              View me
+                            </p>
                           </div>
                         </div>
+                        <div className="card-back">
+                          <video className="video__container" autoPlay muted loop>
+                            <source
+                              className="video__media"
+                              src="https://vod-progressive.akamaized.net/exp=1662551747~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F2922%2F20%2F514613831%2F2385013494.mp4~hmac=5fe76a76b226dfe2830df0652ca7017511d6420b3da8ee93cd824f872b24f408/vimeo-prod-skyfire-std-us/01/2922/20/514613831/2385013494.mp4"
+                              type="video/mp4"
+                            />
+                          </video>
+                        </div>
                       </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
+                    </div>
 
-
-            <div className="container">
-              <div className="table-responsive">
-                <table className="table table-bordered   table-striped">
-                  <thead className="table__head">
-                    <tr className="winner__table">
-                      <th>Sr.No</th>
-                      <th>
-                        <i className="fa fa-user" aria-hidden="true"></i> &nbsp;
-                        Name of donor
-                      </th>
-                      <th>
-                        <i className="fa fa-user" aria-hidden="true"></i> &nbsp;
-                        Name of recipient
-                      </th>
-                      <th>
-                        <i className="fa fa-calendar" aria-hidden="true"></i> &nbsp;
-                        Date of donation
-                      </th>
-                      <th>
-                        {" "}
-                        <i className="fas fa-map-marker-alt"></i> &nbsp; Address
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {
-                      donation.map((i, index) => {
-                        return (
-                          <tr key={index} className="winner__table">
-                            <td>{index + 1}</td>
-                            <td>{i.donor}</td>
-                            <td>{i.recipient}</td>
-                            <td>{new Date(i.donation.dateAdded).toISOString().split('T')[0]}</td>
-                            <td>{i.donation.address}</td>
-                          </tr>
-                        )
-                      })
-                    }
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            {/* );
-                  })
-                ) : (
-                  <div>No</div>
-                )} */}
-            <div className="heading_container mt-5">
-              <h2>All Users List</h2>
-            </div>
-            {/* <form onSubmit={handleSubmit(handleUser, handleError)}>
-              <div className="row">
-                <div className="col-md-6">
-                  <div className="search-1">
-                    <input
-                      type="text"
-                      id="user"
-                      name="user"
-                      placeholder="user"
-                      {...register("user", registerOptions.user)}
-                    />
-                  </div>
-                </div>
-                <div className="col-md-6">
-                  <div>
-                    <div className="search-2">
-                      Date
-                      <input
-                        type="date"
-                        id="dateFilter"
-                        name="dateFilter"
-                        {...register(
-                          "dateFilter",
-                          registerOptions.dateFilter
-                        )}
-                        max={new Date().toISOString().split("T")[0]}
-                      />
-                      <button>Search</button>
+                    <div className="inside-page">
+                      <div className="inside-page__container">
+                        <h3 className="inside-page__heading inside-page__heading--city">
+                          Donation History
+                        </h3>
+                        {/* <p className="inside-page__text">
+                          As cities never sleep, there are always something
+                          going on, no matter what time!
+                        </p> */}
+                        <a
+                          href="donations"
+                          className="inside-page__btn inside-page__btn--city"
+                        >
+                          View deals
+                        </a>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
-            </form> */}
-            <div className="container">
-              <div className="table-responsive">
-                <table className="table table-bordered   table-striped">
-                  <thead className="table__head">
-                    <tr className="winner__table">
-                      <th>Sr.No</th>
-                      <th>
-                        <i className="fa fa-user" aria-hidden="true"></i> &nbsp;
-                        Name of User
-                      </th>
-                      <th>
-                        <i className="fa fa-envelope" aria-hidden="true"></i> &nbsp;
-                        Email
-                      </th>
-                      <th>
-                        <i className="fa fa-address-card" aria-hidden="true"></i> &nbsp;
-                        Adhaar Number
-                      </th>
-                      <th>
-                        {" "}
-                        <i className="fas fa-map-marker-alt"></i> &nbsp; Address
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                  {
-                      user.map((i, index) => {
-                        return (
-                          <tr key={index} className="winner__table">
-                            <td>{index + 1}</td>
-                            <td>{i.name}</td>
-                            <td>{i.email}</td>
-                            <td>{i.adhaarNumber}</td>
-                            <td>{i.address}</td>
-                          </tr>
-                        )
-                      })
-                    }
-                    
-                  </tbody>
-                </table>
-              </div>
-            </div>
+                </section>
+                <section className="card-section">
+                  <div className="card">
+                    <div className="flip-card">
+                      <div className="flip-card__container">
+                        <div className="card-front">
+                          <div className="card-front__tp card-front__tp--ski">
+                            <h2 className="card-front__heading">User</h2>
+                            {/* <p className="card-front__text-price">From £29</p> */}
+                          </div>
+
+                          <div className="card-front__bt">
+                            <p className="card-front__text-view card-front__text-view--ski">
+                              View me
+                            </p>
+                          </div>
+                        </div>
+                        <div className="card-back">
+                          <video className="video__container" autoPlay muted loop>
+                            <source
+                              className="video__media"
+                              src="https://player.vimeo.com/external/370331493.sd.mp4?s=e90dcaba73c19e0e36f03406b47bbd6992dd6c1c&profile_id=139&oauth2_token_id=57447761"
+                              type="video/mp4"
+                            />
+                          </video>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="inside-page">
+                      <div className="inside-page__container">
+                        <h3 className="inside-page__heading inside-page__heading--ski">
+                          Users Information
+                        </h3>
+                       
+                        <a
+                          href="users"
+                          className="inside-page__btn inside-page__btn--ski"
+                        >
+                          View deals
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              </section>
+            </main>
           </div>
         </div>
       </div>
@@ -226,24 +118,6 @@ function Dashboard(props) {
 
 Dashboard.propTypes = {};
 export async function getServerSideProps(context) {
-  const response = await fetch(`${backend}/admin/donations`, {
-    method: "POST",
-    
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: context.req.cookies["jwt"],
-    },
-  });
-  const res = await fetch(`${backend}/admin/users`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: context.req.cookies["jwt"],
-    },
-  });
-  let users=await res.json();
-  let donations = await response.json();
-  return { props:{donations: donations, users:users }};
+  return { props: { "name": context.req.cookies["name"] } };
 }
-
 export default Dashboard;
