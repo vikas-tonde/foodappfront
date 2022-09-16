@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { availableDonation } from "../../routes";
 import cookieCutter from 'cookie-cutter';
 import { useRouter } from "next/router";
+import Link from "next/link";
 function Dashboard(props) {
   const {
     register,
@@ -106,8 +107,9 @@ function Dashboard(props) {
             <div id="wrap">
               <div id="columns" className="columns_4">
                 {donation && donation.map((i, index) => {
+                  console.log(i._id);
                   return (
-                    <figure key={index}>
+                    <Link href={i._id}><a><figure key={index}>
                       <Image
                         src={
                           "/" + i["images"][0].split("\\").slice(3).join("/")
@@ -132,10 +134,8 @@ function Dashboard(props) {
                       <span className="price">
                         {new Date(i.dateAdded).toDateString()}
                       </span>
-                      <button type="button" name="accept" id={i._id} className="btn btn-success-outline"  onClick={(e) => accept(e.target.id)}>
-                        Accept
-                      </button>
-                    </figure>
+                     
+                    </figure></a></Link>
                   );
                 })}
               </div>

@@ -59,7 +59,7 @@ function Sidebar(props) {
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link text-white" onClick={handleLogout}>
+            <a role="button" className="nav-link text-white" onClick={handleLogout}>
               <i aria-hidden className="fas fa-sign-out-alt"></i> &nbsp; Logout
             </a>
           </li>

@@ -19,7 +19,7 @@ function MyApp({ Component, pageProps }) {
     <>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Food Bank| {Component.name}</title>
+        <title>Food Bank | {Component.name}</title>
         <link
           async
           rel="stylesheet"

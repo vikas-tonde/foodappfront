@@ -2,83 +2,128 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import backend from '../../config';
 import Image from 'next/image';
+import GoogleMapReact from 'google-map-react';
+import Sidebar from '../../component/Sidebar';
 
 
-function donationDetail(props) {
+const Marker = ({ text }) => <div className='text-danger h1 font-weight-bold'><i className="fas fa-map-marker-alt"></i></div>;
+
+// function SimpleMap(){
+//   const defaultProps = {
+//     center: {
+//       lat: 10.99835602,
+//       lng: 77.01502627
+//     },
+//     zoom: 11
+//   };
+// }
+
+
+function Donation(props) {
     console.log(props.data);
+    const defaultProps = {
+      center: {
+        lat: props.data.data.location.latitude,
+        lng: props.data.data.location.longitude
+      },
+      zoom: 12
+    };
+
+
   return (
-    <div className = "card-wrapper">
-  <div className = "card">
-  
-    <div className = "product-imgs">
-      <div className = "img-display">
-        <div className = "img-showcase">
-          <Image width="550px" height="300px" src = "/images/food.png" alt = "shoe image" />
-          
-        </div>
+    <div className="container-fluid">
+    <div className="row flex-nowrap">
+      <Sidebar name={props.name}/>
+      <div className="col py-3 second row">
+   <div className='container'>
+    <div className='row mt-5'>
+      
+      <div className='col-md-6'>
+        <div><img src={
+                          "/" + props.data.data["images"][0].split("\\").slice(3).join("/")
+                        } width="100%" height="100%" /></div>
       </div>
-      <div className = "img-select">
-        <div className = "img-item">
-          <a href = "#" data-id = "1">
-            <Image width="250px" height="300px" src = "/images/client.jpg" alt = "shoe image" />
-          </a>
-        </div>
-        <div className = "img-item">
-          <a href = "#" data-id = "2">
-            <Image width="250px" height="300px" src = "/images/client.jpg" alt = "shoe image" />
-          </a>
-        </div>
-        <div className = "img-item">
-          <a href = "#" data-id = "3">
-            <Image width="250px" height="300px" src = "/images/client.jpg" alt = "shoe image" />
-          </a>
-        </div>
-        <div className = "img-item">
-          <a href = "#" data-id = "4">
-            <Image width="250px" height="300px" src = "/images/client.jpg" alt = "shoe image" />
-          </a>
-        </div>
+      <div className='col-md-6'>
+      <div className="_product-detail-content">
+               
+               <div className="_p-price-box">
+                  <div className="p-list">
+                     <span> Date : 
+                     {new Date(props.data.data.dateAdded).toDateString()}
+                     </span>     
+                  </div>
+                  <div className="_p-add-cart">
+                     <div className="_p-qty">
+                        <span>City : </span>
+                        <span>{props.data.data.city}</span>
+                     </div>
+                  </div>
+                  <div className="p-list">
+                     <span> Address : {props.data.data.address}  </span>  
+                    
+                     <div style={{ height: '60vh', width: '100%' }}>
+      <GoogleMapReact
+        bootstrapURLKeys={{ key: "AIzaSyD2Sg1CVIvIlMoyNsXuIQCtLmQ-O4po1Ps" }}
+        defaultCenter={defaultProps.center}
+        defaultZoom={defaultProps.zoom}
+      >
+        <Marker
+         lat= {props.data.data.location.latitude}
+         lng={props.data.data.location.longitude}
+          text="My Marker"
+        />
+      </GoogleMapReact>
+    </div>
+                      
+                  </div>
+                  <div className="_p-features">
+                     <span> Food Items : </span>
+                     
+                     <table className="table table-bordered mt-3">
+                  <thead>
+                    <tr>
+                      <th scope="col">No</th>
+                      <th scope="col">Item Name</th>
+                      <th scope="col">Quantity</th>
+                      <th scope="col">Expiry</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                
+                    {props.data.data.items.map((item, i) => {
+                      return (
+                        <tr key={i}>
+                          <th scope="row">{i + 1}</th>
+                          <td>{item.name}</td>
+                          <td>{item.quantity}</td>
+                          <td>{item.expiry}</td>
+                          
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>                    
+                  </div>
+                     <div className="_p-qty-and-cart">
+                        <div className="_p-add-cart text-center">
+                           <button className="btn-theme btn buy-btn" tabIndex="0">
+                           <i className="fa fa-shopping-cart"></i> Accept
+                           </button>   
+                        </div>
+                     </div>
+                  </div>
+                  </div>
+                  </div>
+               </div>
+            </div>
       </div>
     </div>
    
-    <div className = "product-content">
-      <h2 className = "product-title">nike shoes</h2>
-      <a href = "#" className = "product-link">visit nike store</a>
-      <div className = "product-rating">
-        <i className = "fas fa-star"></i>
-        <i className = "fas fa-star"></i>
-        <i className = "fas fa-star"></i>
-        <i className = "fas fa-star"></i>
-        <i className = "fas fa-star-half-alt"></i>
-        <span>4.7(21)</span>
-      </div>
-
-      <div className = "product-detail">
-        <h2>about this item: </h2>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo eveniet veniam tempora fuga tenetur placeat sapiente architecto illum soluta consequuntur, aspernatur quidem at sequi ipsa!</p>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur, perferendis eius. Dignissimos, labore suscipit. Unde.</p>
-        <ul>
-          <li>Color: <span>Black</span></li>
-          <li>Available: <span>in stock</span></li>
-          <li>Category: <span>Shoes</span></li>
-          <li>Shipping Area: <span>All over the world</span></li>
-          <li>Shipping Fee: <span>Free</span></li>
-        </ul>
-      </div>
-
-      <div className = "purchase-info">
-        <button type = "button" className = "btn">
-          Add to Cart <i className = "fas fa-shopping-cart"></i>
-        </button>
-        <button type = "button" className = "btn">Compare</button>
-      </div>
-    </div>
-  </div>
-</div>
+   </div>
   )
 }
 
-donationDetail.propTypes = {}
+Donation.propTypes = {}
 
 export async function getServerSideProps(context)
 {
@@ -91,8 +136,7 @@ export async function getServerSideProps(context)
     }
     );
     var data = await response.json();
-    return {props:data}
+    return {props: { "data": data, "name": context.req.cookies["name"] }}
 }
 
-
-export default donationDetail
+export default Donation
