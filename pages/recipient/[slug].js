@@ -23,8 +23,8 @@ function Donation(props) {
     console.log(props.data);
     const defaultProps = {
       center: {
-        lat: props.data.data.location.latitude,
-        lng: props.data.data.location.longitude
+        lat: parseInt(props.data.data.location.latitude),
+        lng: parseInt(props.data.data.location.longitude)
       },
       zoom: 12
     };
@@ -63,13 +63,13 @@ function Donation(props) {
                     
                      <div style={{ height: '60vh', width: '100%' }}>
       <GoogleMapReact
-        bootstrapURLKeys={{ key: "AIzaSyD2Sg1CVIvIlMoyNsXuIQCtLmQ-O4po1Ps" }}
+        bootstrapURLKeys={{ key: "AIzaSyA64XQTd8Sya2n0Lm8Bm6J_kln-DWtM5tU" }}
         defaultCenter={defaultProps.center}
         defaultZoom={defaultProps.zoom}
       >
         <Marker
-         lat= {props.data.data.location.latitude}
-         lng={props.data.data.location.longitude}
+         lat= {parseInt(props.data.data.location.latitude)}
+         lng={parseInt(props.data.data.location.longitude)}
           text="My Marker"
         />
       </GoogleMapReact>

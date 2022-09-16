@@ -109,7 +109,7 @@ function Dashboard(props) {
                 {donation && donation.map((i, index) => {
                   console.log(i._id);
                   return (
-                    <Link href={i._id}><a><figure key={index}>
+                    <Link key={index} href={i._id}><a><figure >
                       <Image
                         src={
                           "/" + i["images"][0].split("\\").slice(3).join("/")
