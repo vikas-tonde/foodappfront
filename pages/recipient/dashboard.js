@@ -105,7 +105,7 @@ function Dashboard(props) {
             </div>
             <div id="wrap">
               <div id="columns" className="columns_4">
-                {donation.map((i, index) => {
+                {donation && donation.map((i, index) => {
                   return (
                     <figure key={index}>
                       <Image

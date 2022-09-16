@@ -6,7 +6,7 @@ import backend from "../../config";
 import { useForm } from "react-hook-form";
 import { availableDonation } from "../../routes";
 import cookieCutter from "cookie-cutter";
-function users(props) {
+function Users(props) {
   const {
     register,
     handleSubmit,
@@ -143,7 +143,7 @@ function users(props) {
   );
 }
 
-users.propTypes = {};
+Users.propTypes = {};
 export async function getServerSideProps(context) {
   const response = await fetch(`${backend}/admin/donations`, {
     method: "POST",
@@ -165,4 +165,4 @@ export async function getServerSideProps(context) {
   return { props:{donations: donations, users:users }};
 }
 
-export default users;
+export default Users;

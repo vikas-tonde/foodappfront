@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-function forgot(props) {
+function Forgot(props) {
   return (
     <div className="container">
 	<div className="row">
@@ -39,6 +39,6 @@ function forgot(props) {
   )
 }
 
-forgot.propTypes = {}
+Forgot.propTypes = {}
 
-export default forgot
+export default Forgot

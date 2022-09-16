@@ -9,7 +9,7 @@ import cookieCutter from 'cookie-cutter';
 
 
 
-function dashboard(props) {
+function Dashboard(props) {
   const [items, setItems] = useState([]);
   const [lat, setlat] = useState(0);
   const [lng, setlng] = useState(0);
@@ -258,7 +258,7 @@ function dashboard(props) {
   );
 }
 
-dashboard.propTypes = {};
+Dashboard.propTypes = {};
 
 export async function getServerSideProps(context)
 {
@@ -277,4 +277,4 @@ export async function getServerSideProps(context)
     return { props: { "data": data, "name": context.req.cookies["name"] } }
 }
 
-export default dashboard;
+export default Dashboard;

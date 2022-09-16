@@ -7,7 +7,7 @@ import Navbar from '../component/Navbar';
 import Slider from '../component/Slider';
 import Testimonial from '../component/Testimonial';
 
-function HomePage() {
+function Home() {
   return (
     <>
      <Navbar />
@@ -20,4 +20,4 @@ function HomePage() {
   );
 }
 
-export default HomePage;
+export default Home;

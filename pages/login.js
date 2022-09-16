@@ -24,8 +24,10 @@ function Login(props) {
     }
     );
     const responseData = await response.json();
-    cookieCutter.set('jwt', responseData['jwt'], { expires: new Date(Date.now() + 86400) })
-    cookieCutter.set('name', responseData['name'], { expires: new Date(Date.now() + 86400) })
+    cookieCutter.set('jwt', responseData['jwt'], { expires: new Date(Date.now() + 86400) , path:"/"});
+    cookieCutter.set('name', responseData['name'], { expires: new Date(Date.now() + 86400), path:"/" });
+    cookieCutter.set('role', responseData['role'], { expires: new Date(Date.now() + 86400), path:"/" });
+
 
 
     if (responseData['role'] === 'donor')
