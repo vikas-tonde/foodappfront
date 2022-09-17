@@ -28,9 +28,6 @@ function MyApp({ Component, pageProps }) {
   useEffect(() => {
     typeof document !== undefined ? require('bootstrap/dist/js/bootstrap') : null
   }, [])
-
-
-  console.log(Component.name)
   if (Component.name == 'Login' || Component.name == 'Register' || Component.name=='Home' || isLoggedIn()) {
     return (
       <>
@@ -43,7 +40,7 @@ function MyApp({ Component, pageProps }) {
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
           />
           <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-          <script src="https://kit.fontawesome.com/a1c4c0eac6.js" crossorigin="anonymous"></script>
+          <script src="https://kit.fontawesome.com/a1c4c0eac6.js" crossOrigin="anonymous"></script>
 
 
         </Head>
