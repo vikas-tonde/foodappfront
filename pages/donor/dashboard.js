@@ -274,7 +274,7 @@ export async function getServerSideProps(context)
     }
     );
     var data = await response.json();
-    return { props: { "data": data, "name": context.req.cookies["name"] } }
+    return { props: { "data": data, "name": context.req.cookies["name"]|| null } }
 }
 
 export default Dashboard;

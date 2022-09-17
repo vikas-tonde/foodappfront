@@ -20,7 +20,7 @@ function Sidebar(props) {
         : setHistory("unactive");
     }
   }, []);
-
+  
   const handleLogout = (e) => {
     e.preventDefault();
     cookieCutter.set("jwt", "", {

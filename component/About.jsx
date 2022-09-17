@@ -9,7 +9,7 @@ function About(props) {
         <div className="row">
           <div className="col-md-6 ">
             <div className="img-box">
-              <Image src="/images/slider-img2.png" width="500px" s height="400px" alt="" />
+              <Image src="/images/slider-img2.png" width="500px" height="400px" alt="" />
             </div>
           </div>
           <div className="col-md-6">

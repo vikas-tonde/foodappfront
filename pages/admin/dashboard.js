@@ -118,6 +118,6 @@ function Dashboard(props) {
 
 Dashboard.propTypes = {};
 export async function getServerSideProps(context) {
-  return { props: { "name": context.req.cookies["name"] } };
+  return { props: { "name": context.req.cookies["name"] || null } };
 }
 export default Dashboard;

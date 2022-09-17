@@ -158,8 +158,7 @@ export async function getServerSideProps(context) {
     },
   });
   let data = await response.json();
-  console.log(data)
-  return { props: { "data": data, "name": context.req.cookies["name"] } };
+  return { props: { "data": data, "name": context.req.cookies["name"]|| null } };
 }
 
 export default Dashboard;
