@@ -28,7 +28,7 @@ function MyApp({ Component, pageProps }) {
   useEffect(() => {
     typeof document !== undefined ? require('bootstrap/dist/js/bootstrap') : null
   }, [])
-  if (Component.name == 'Login' || Component.name == 'Register' || Component.name=='Home' || isLoggedIn()) {
+  if (Component.name == 'Login' || Component.name == 'Register' || Component.name == 'Home' || isLoggedIn()) {
     return (
       <>
         <Head>

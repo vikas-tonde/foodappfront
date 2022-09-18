@@ -6,6 +6,7 @@ import { register, handleSubmit, useForm } from "react-hook-form";
 import { addDonation } from "../../routes.js";
 import backend from "../../config.js";
 import cookieCutter from 'cookie-cutter';
+import { useRouter } from "next/router";
 
 
 
@@ -13,13 +14,14 @@ function Dashboard(props) {
   const [items, setItems] = useState([]);
   const [lat, setlat] = useState(0);
   const [lng, setlng] = useState(0);
+  const router = useRouter();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({ mode: "onChange" });
-  const handleError = (errors) => {};
-  const handleAddress = (errors) => {};
+  const handleError = (errors) => { };
+  const handleAddress = (errors) => { };
 
   const registerOptions = {
     title: {
@@ -80,7 +82,7 @@ function Dashboard(props) {
 
   const handleDonation = async (data) => {
     const allData = new FormData();
-    allData.append("image", data.images[0], "b1.png" );
+    allData.append("image", data.images[0], "b1.png");
     items.forEach((item, i) => {
       allData.append(`items[${i}][name]`, item.name);
       allData.append(`items[${i}][quantity]`, item.quantity);
@@ -95,10 +97,13 @@ function Dashboard(props) {
       body: allData,
       headers: {
         Authorization:
-        cookieCutter.get("jwt")
+          cookieCutter.get("jwt")
       },
     });
-    console.log(response);
+    const res = await response.json();
+    if(res.success){
+      router.reload();
+    }
   };
 
   return (
@@ -165,8 +170,8 @@ function Dashboard(props) {
                   <i aria-hidden className="fas fa-plus"></i> &nbsp; ADD
                 </button>
               </div>
-              </form>
-              <form onSubmit={handleSubmit(handleDonation, handleAddress)}>
+            </form>
+            <form onSubmit={handleSubmit(handleDonation, handleAddress)}>
               <div className="mb-3">
                 <label htmlFor="address" className="form-label">
                   Address
@@ -193,11 +198,11 @@ function Dashboard(props) {
                   name="city"
                   {...register("city", registerOptions.city)}
                 >
-                  { props.data.data.map((i,index)=>{
-                    return(
+                  {props.data.data.map((i, index) => {
+                    return (
                       <option key={index} value={i}>{i}</option>
                     )
-                  }) }
+                  })}
                 </select>
                 <small className="text-danger">
                   {errors?.city && errors.city.message}
@@ -243,8 +248,8 @@ function Dashboard(props) {
                 />
               </div>
               <small className="text-danger">
-                  {errors?.images && errors.images.message}
-                </small>
+                {errors?.images && errors.images.message}
+              </small>
               <div className="container d-flex align-items-center justify-content-center">
                 <button type="submit" className="btn btn-primary mt-5">
                   Submit
@@ -260,21 +265,20 @@ function Dashboard(props) {
 
 Dashboard.propTypes = {};
 
-export async function getServerSideProps(context)
-{
-    const response = await fetch("https://countriesnow.space/api/v0.1/countries/state/cities", {
-      method: 'POST',
-      body: JSON.stringify({
-        "country":"India",
-        "state":"Maharashtra"
+export async function getServerSideProps(context) {
+  const response = await fetch("https://countriesnow.space/api/v0.1/countries/state/cities", {
+    method: 'POST',
+    body: JSON.stringify({
+      "country": "India",
+      "state": "Maharashtra"
     }),
-      headers: {
-        'Content-Type': 'application/json',
-      }
+    headers: {
+      'Content-Type': 'application/json',
     }
-    );
-    var data = await response.json();
-    return { props: { "data": data, "name": context.req.cookies["name"]|| null } }
+  }
+  );
+  var data = await response.json();
+  return { props: { "data": data, "name": context.req.cookies["name"] || null } }
 }
 
 export default Dashboard;

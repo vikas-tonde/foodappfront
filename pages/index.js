@@ -10,12 +10,12 @@ import Testimonial from '../component/Testimonial';
 function Home() {
   return (
     <>
-     <Navbar />
-     <Slider />
-     <HomeSlider />
-     <About />
-     <Testimonial />
-     <Footer />
+      <Navbar />
+      <Slider />
+      <HomeSlider />
+      <About />
+      <Testimonial />
+      <Footer />
     </>
   );
 }

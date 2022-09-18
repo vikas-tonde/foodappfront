@@ -4,7 +4,7 @@ import Sidebar from "../../component/Sidebar";
 import Image from "next/image";
 import { register, handleSubmit, useForm } from "react-hook-form";
 import backend from "../../config";
-import {historyDonation, receiveDonation} from "../../routes";
+import { historyDonation, receiveDonation } from "../../routes";
 import cookieCutter from 'cookie-cutter';
 
 function History(props) {
@@ -15,7 +15,7 @@ function History(props) {
   } = useForm({ mode: "onChange" });
 
   const [donation, setDonation] = useState(props.data.data);
-  const handleError = (errors) => {};
+  const handleError = (errors) => { };
   const registerOptions = {
     to: {
       required: "From is required",
@@ -40,13 +40,13 @@ function History(props) {
       },
     });
     let responseData = await response.json()
-    
+
     setDonation(responseData['data']);
   };
   return (
     <div className="container-fluid">
       <div className="row flex-nowrap">
-        <Sidebar name={props.name}/>
+        <Sidebar name={props.name} />
         <div className="col py-3 second row">
           <section className="blog_section layout_padding2-top layout_padding-bottom">
             <div className="container">
@@ -90,37 +90,37 @@ function History(props) {
                 </div>
               </div>
               <div className="row">
-              { donation.map((i,index)=>{
-              return(
-                
-                <div key={index} className="col-md-4">
-                  <div className="box">
-                    <div className="img-box">
-                      <Image
-                        src={"/" + i["images"][0].split("\\").slice(3).join("/") }
-                        width="350px"
-                        height="250px"
-                        alt=""
-                      />
-                      <h4 className="blog_date">
-                        {new Date(i.dateAdded).toISOString().split("T")[0]}
-                      </h4>
+                {!donation && <p className="text-danger">You have not accepted any donation yet</p>}
+                {donation && donation.map((i, index) => {
+                  return (
+                    <div key={index} className="col-md-4">
+                      <div className="box">
+                        <div className="img-box">
+                          <Image
+                            src={"/" + i["images"][0].split("\\").slice(3).join("/")}
+                            width="350px"
+                            height="250px"
+                            alt=""
+                          />
+                          <h4 className="blog_date">
+                            {new Date(i.dateAdded).toISOString().split("T")[0]}
+                          </h4>
+                        </div>
+                        <div className="detail-box">
+
+                          <h5> {i.items.map((e) => {
+                            return (e.name)
+                          }).join(", ")}
+                          </h5>
+                          <p>
+                            Location
+                            {i["address"]}
+                          </p>
+                        </div>
+                      </div>
                     </div>
-                    <div className="detail-box">
-                    
-                      <h5> {i.items.map((e)=>{
-                        return(e.name)
-                      }).join(", ") }
-                      </h5>
-                      <p>
-                        Location
-                        {i["address"]}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                );
-                }) }
+                  );
+                })}
               </div>
             </div>
           </section>
@@ -132,18 +132,17 @@ function History(props) {
 
 History.propTypes = {};
 
-export async function getServerSideProps(context)
-{
-    const response = await fetch(`${backend}${receiveDonation}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': context.req.cookies['jwt'],
-      }
+export async function getServerSideProps(context) {
+  const response = await fetch(`${backend}${receiveDonation}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': context.req.cookies['jwt'],
     }
-    );
-    var data = await response.json();
-    return { props: { "data": data, "name": context.req.cookies["name"] } }
+  }
+  );
+  var data = await response.json();
+  return { props: { "data": data, "name": context.req.cookies["name"] } }
 }
 
 

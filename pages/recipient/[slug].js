@@ -4,29 +4,29 @@ import backend from '../../config';
 import Image from 'next/image';
 import GoogleMapReact from 'google-map-react';
 import Sidebar from '../../component/Sidebar';
-
+import { useRouter } from 'next/router';
 
 const Marker = ({ text }) => <div className='text-danger h1 font-weight-bold'><i className="fas fa-map-marker-alt"></i></div>;
 
-const accept = async (_id) => {
-  console.log(_id);
-  const response = await fetch(`${backend}/recipient/accept`, {
-    method: "POST",
-    body: JSON.stringify({
-      "id": _id
-    }),
-    headers: {
-      'Content-Type': "application/json",
-      Authorization: cookieCutter.get("jwt"),
-    },
-  });
-  let data = await response.json();
-  console.log(data)
-  setDonation(data.data);
-}
-
 function Donation(props) {
-  console.log(props.data);
+  const router = useRouter();
+  const accept = async (_id) => {
+    console.log(_id);
+    const response = await fetch(`${backend}/recipient/accept`, {
+      method: "POST",
+      body: JSON.stringify({
+        "id": _id
+      }),
+      headers: {
+        'Content-Type': "application/json",
+        Authorization: cookieCutter.get("jwt"),
+      },
+    });
+    let data = await response.json();
+    if (data.success) {
+      router.push('/recipient/dashboard');
+    }
+  }
   const defaultProps = {
     center: {
       lat: parseInt(props.data.data.location.latitude),
