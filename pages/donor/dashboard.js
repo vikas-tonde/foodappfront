@@ -102,7 +102,7 @@ function Dashboard(props) {
     });
     const res = await response.json();
     if(res.success){
-      router.reload();
+      alert("registration")
     }
   };
 
@@ -210,8 +210,8 @@ function Dashboard(props) {
               </div>
               <div className="row mt-5  mx-3">
                 <table className="table table-bordered">
-                  <thead>
-                    <tr>
+                  <thead className="thead">
+                    <tr className="tr">
                       <th scope="col">No</th>
                       <th scope="col">Item Name</th>
                       <th scope="col">Quantity</th>
@@ -219,7 +219,7 @@ function Dashboard(props) {
                       <th scope="col">Actions</th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody className="tbody">
                     {items.map((item, i) => {
                       return (
                         <tr key={i}>
@@ -246,10 +246,11 @@ function Dashboard(props) {
                   id="images"
                   {...register("images", registerOptions.images)}
                 />
-              </div>
-              <small className="text-danger">
+                <small className="text-danger">
                 {errors?.images && errors.images.message}
               </small>
+              </div>
+              
               <div className="container d-flex align-items-center justify-content-center">
                 <button type="submit" className="btn btn-primary mt-5">
                   Submit
@@ -260,6 +261,7 @@ function Dashboard(props) {
         </div>
       </div>
     </div>
+  
   );
 }
 

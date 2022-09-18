@@ -89,11 +89,8 @@ function Login(props) {
                 <label className="form-label" htmlFor="password">Password</label>
               </div>
               <div className="d-flex justify-content-around align-items-center mb-4">
-                <div className="form-check">
-                  <input className="form-check-input" type="checkbox" value="" id="remember" />
-                  <label className="form-check-label" htmlFor="remember"> Remember me </label>
-                </div>
-                <Link href="/forgot"><a className='fw-bold'>Forgot password?</a></Link>
+               
+                {/* <Link href="/forgot"><a className='fw-bold'>Forgot password?</a></Link> */}
               </div>
               <button type="submit" className="btn btn-primary btn-lg btn-block">Sign in</button>
               <p className="small fw-bold mt-3 mb-0">Don't have an account?
