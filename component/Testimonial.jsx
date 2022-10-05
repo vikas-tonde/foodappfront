@@ -15,7 +15,7 @@ function Testimonial(props) {
         interval: 1200
       })
     });
-  })
+  },[])
   return (
     <section className="client_section p-5 ">
     <div className="container">

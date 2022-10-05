@@ -27,7 +27,6 @@ function History(props) {
 
 
   const handleHistory = async (data) => {
-    console.log(data.to);
     const response = await fetch(`${backend}${receiveDonation}`, {
       method: "POST",
       body: JSON.stringify({

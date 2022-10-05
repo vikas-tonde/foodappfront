@@ -43,14 +43,14 @@ function Users(props) {
     <div>
       <div className="container-fluid">
         <div className="row flex-nowrap">
-          <AdminSidebar />
+          <AdminSidebar name= {props.name} />
 
-          <div className="col py-3 second row">
+          <div className="col py-3 second row ">
             <div className="heading_container mt-5">
               <h2>All Users List</h2>
             </div>
-            <form onSubmit={handleSubmit(handleUser, handleError)}>
-              <div className="row">
+            {/* <form onSubmit={handleSubmit(handleUser, handleError)}>
+              <div className="row mx-4">
                 <div className="col-md-4">
                   <div className="search-1">
                     <input
@@ -92,8 +92,8 @@ function Users(props) {
                   </div>
                 </div>
               </div>
-            </form>
-            <div className="container mt-5">
+            </form> */}
+            <div className="container mt-5 mx-4">
               <div className="table-responsive">
                 <table className="table table-bordered   table-striped">
                   <thead className="table__head">
@@ -162,7 +162,7 @@ export async function getServerSideProps(context) {
   });
   let users=await res.json();
   let donations = await response.json();
-  return { props:{donations: donations, users:users }};
+  return { props:{donations: donations, users:users, "name": context.req.cookies["name"] ||null }};
 }
 
 export default Users;

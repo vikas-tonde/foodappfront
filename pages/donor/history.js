@@ -91,7 +91,8 @@ function History(props) {
                 </div>
               </div>
               <div className="row">
-              { donation.map((i,index)=>{
+              {!donation && <p className="text-danger">You have not made any donation yet</p>}
+              {donation && donation.map((i,index)=>{
               return(
                 <div className="col-md-4" key={index}>
                   <div className="box">

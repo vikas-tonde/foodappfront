@@ -1016,6 +1016,7 @@ height: 100%;
 }
 .second{
     margin-left: 220px;
+    padding-left: 20px;
     /* background: url("../public/images/background.png"), #f2f1ee; */
   }
 
@@ -1069,7 +1070,13 @@ height: 100%;
 
 .search-2 {
     position: relative;
-    width: 100%
+    width: 100%;
+    display:flex;
+    height: 100%;
+    max-height: 100%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
 }
 
 .search-2 input {
@@ -1095,7 +1102,7 @@ height: 100%;
 }
 
 .search-2 button {
-    position: absolute;
+    /* position: absolute; */
     right: 1px;
     top: 0px;
     border: none;

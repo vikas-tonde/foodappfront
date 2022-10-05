@@ -5,6 +5,7 @@ import Image from 'next/image';
 import GoogleMapReact from 'google-map-react';
 import Sidebar from '../../component/Sidebar';
 import { useRouter } from 'next/router';
+import cookieCutter from 'cookie-cutter';
 
 const Marker = ({ text }) => <div className='text-danger h1 font-weight-bold'><i className="fas fa-map-marker-alt"></i></div>;
 
@@ -112,7 +113,7 @@ function Donation(props) {
                     </div>
                     <div className="_p-qty-and-cart">
                       <div className="_p-add-cart text-center">
-                        <button className="btn-theme btn buy-btn" tabIndex="0" onClick={accept(props.data.data._id)}>
+                        <button className="btn-theme btn buy-btn" tabIndex="0" onClick={()=>accept(props.data.data._id)}>
                           <i className="fa fa-shopping-cart"></i> Accept
                         </button>
                       </div>

@@ -27,6 +27,7 @@ function Dashboard(props) {
     // }
   };
   const handleDonation = async (data) => {
+    console.log(data.dateFilter)
     const response = await fetch(`${backend}${availableDonation}`, {
       method: "POST",
       body: JSON.stringify({
@@ -39,6 +40,7 @@ function Dashboard(props) {
       },
     });
     let responseData = await response.json()
+    console.log(responseData)
     setDonation(responseData['data']);
   };
   const accept = async (_id) => {
@@ -86,7 +88,7 @@ function Dashboard(props) {
                         <div className="col-md-6">
                           <div>
                             <div className="search-2">
-                              Date
+                              <p>Date</p>
                               <input
                                 type="date"
                                 id="dateFilter"
@@ -94,7 +96,7 @@ function Dashboard(props) {
                                 {...register("dateFilter", registerOptions.dateFilter)}
                                 max={new Date().toISOString().split("T")[0]}
                               />
-                              <button className="btn btn-success">search</button>
+                              <button type="submit" className="btn btn-success">search</button>
                             </div>
                           </div>
                         </div>

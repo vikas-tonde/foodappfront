@@ -102,7 +102,7 @@ function Dashboard(props) {
     });
     const res = await response.json();
     if(res.success){
-      alert("registration")
+      router.reload()
     }
   };
 

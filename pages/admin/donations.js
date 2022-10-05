@@ -43,7 +43,7 @@ function Donations(props) {
     <div>
       <div className="container-fluid">
         <div className="row flex-nowrap">
-          <AdminSidebar />
+          <AdminSidebar name={props.name} />
 
           <div className="col py-3 second row">
             <div className="row mt-5">
@@ -55,7 +55,7 @@ function Donations(props) {
                   <div className="row">
                     <form onSubmit={handleSubmit(handleDonation, handleError)}>
                       <div className="row">
-                        <div className="col-md-4">
+                        {/* <div className="col-md-4">
                           <div className="search-1">
                             <input
                               type="text"
@@ -75,12 +75,12 @@ function Donations(props) {
                               placeholder="email"
                               {...register("email", registerOptions.email)}
                             />
-                          </div>
-                        </div>
-                        <div className="col-md-4">
+                          </div> 
+                        </div>*/}
+                        <div className="col-md-8">
                           <div>
                             <div className="search-2">
-                              Date
+                              <p>Date </p>
                               <input
                                 type="date"
                                 id="dateFilter"
@@ -156,7 +156,7 @@ Donations.propTypes = {};
 export async function getServerSideProps(context) {
   const response = await fetch(`${backend}/admin/donations`, {
     method: "POST",
-    
+
     headers: {
       "Content-Type": "application/json",
       Authorization: context.req.cookies["jwt"],
@@ -169,9 +169,9 @@ export async function getServerSideProps(context) {
       Authorization: context.req.cookies["jwt"],
     },
   });
-  let users=await res.json();
+  let users = await res.json();
   let donations = await response.json();
-  return { props:{donations: donations, users:users }};
+  return { props: { donations: donations, users: users,"name": context.req.cookies["name"] || null } };
 }
 
 export default Donations;
